@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RentACarAPI.Contexts;
+using RentACarAPI.Models;
 using RentACarAPI.Services;
 using System.Text;
 
@@ -22,17 +23,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Contexts
-builder.Services.AddDbContext<UsersContext>();
+builder.Services.AddDbContext<DataContext>();
 
 // Identity
-builder.Services.AddIdentityCore<IdentityUser>(options =>
+builder.Services.AddIdentityCore<Owner>(options =>
 {
     options.User.RequireUniqueEmail = true;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequiredLength = 5;
 })
-    .AddEntityFrameworkStores<UsersContext>()
+    .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
 

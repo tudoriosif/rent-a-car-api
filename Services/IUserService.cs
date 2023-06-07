@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using RentACarAPI.Controllers.Auth;
 using RentACarAPI.Controllers.User;
+using RentACarAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,10 +19,10 @@ namespace RentACarAPI.Services
     public class UserService : IUserService
     {
 
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<Owner> _userManager;
         private IConfiguration _config;
 
-        public UserService (UserManager<IdentityUser> userManager, IConfiguration config)
+        public UserService (UserManager<Owner> userManager, IConfiguration config)
         {
             _userManager = userManager;
             _config = config;
@@ -43,7 +44,7 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var identityUser = new IdentityUser
+            var identityUser = new Owner
             {
                 Email = model.Email,
                 UserName = model.UserName,
