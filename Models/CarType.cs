@@ -4,9 +4,9 @@ namespace RentACarAPI.Models
 {
     public enum CarTypeEnum
     {
-        Budget = 0,
-        Common = 1,
-        Luxury = 2,
+        Budget = 1,
+        Common = 2,
+        Luxury = 3,
     }
 
     public class CarType

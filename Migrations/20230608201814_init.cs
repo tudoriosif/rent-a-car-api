@@ -241,7 +241,7 @@ namespace RentACarAPI.Migrations
                     Price = table.Column<double>(type: "double", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false),
-                    OwnerId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    OwnerId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

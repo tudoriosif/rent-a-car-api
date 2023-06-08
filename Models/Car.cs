@@ -25,7 +25,7 @@ namespace RentACarAPI.Models
         public int PositionId { get; set; }
         public Position? Position { get; set; }
 
-        public string OwnerId { get; set; }
+        public string? OwnerId { get; set; }
         public Owner? Owner { get; set; }
     }
 }

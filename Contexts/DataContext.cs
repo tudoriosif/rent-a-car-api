@@ -16,6 +16,8 @@ namespace RentACarAPI.Contexts
 
         public DbSet<CarType> CarTypes { get; set; }
 
+        public DbSet<Owner> Owners { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -32,7 +34,7 @@ namespace RentACarAPI.Contexts
                     .Cast<CarTypeEnum>()
                     .Select(e => new CarType
                     {
-                        Id = (short)e + 1,
+                        Id = (short)e,
                         Type = e.ToString()
                     })
             );
@@ -40,7 +42,8 @@ namespace RentACarAPI.Contexts
             builder.Entity<Car>()
                 .HasOne(c => c.Position)
                 .WithOne()
-                .HasForeignKey<Car>(c => c.PositionId);
+                .HasForeignKey<Car>(c => c.PositionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Car>()
                 .HasOne(c => c.Owner)

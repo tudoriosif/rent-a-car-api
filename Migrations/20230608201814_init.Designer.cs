@@ -11,7 +11,7 @@ using RentACarAPI.Contexts;
 namespace RentACarAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230607195302_init")]
+    [Migration("20230608201814_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -168,7 +168,6 @@ namespace RentACarAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("PositionId")
@@ -368,8 +367,7 @@ namespace RentACarAPI.Migrations
                     b.HasOne("RentACarAPI.Models.Owner", "Owner")
                         .WithMany("Cars")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RentACarAPI.Models.Position", "Position")
                         .WithOne()

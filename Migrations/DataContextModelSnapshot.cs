@@ -165,7 +165,6 @@ namespace RentACarAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("PositionId")
@@ -186,7 +185,7 @@ namespace RentACarAPI.Migrations
                     b.HasIndex("PositionId")
                         .IsUnique();
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("RentACarAPI.Models.CarType", b =>
@@ -202,7 +201,7 @@ namespace RentACarAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarTypes");
+                    b.ToTable("CarTypes", (string)null);
 
                     b.HasData(
                         new
@@ -300,7 +299,7 @@ namespace RentACarAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Positions");
+                    b.ToTable("Positions", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -365,8 +364,7 @@ namespace RentACarAPI.Migrations
                     b.HasOne("RentACarAPI.Models.Owner", "Owner")
                         .WithMany("Cars")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RentACarAPI.Models.Position", "Position")
                         .WithOne()
