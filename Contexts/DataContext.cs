@@ -18,6 +18,8 @@ namespace RentACarAPI.Contexts
 
         public DbSet<Owner> Owners { get; set; }
 
+        public DbSet<RentingEvent> RentingEvents { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -50,6 +52,18 @@ namespace RentACarAPI.Contexts
                 .WithMany(u => u.Cars)
                 .HasForeignKey(c => c.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Owner>()
+                .HasMany(o => o.RentingEvents)
+                .WithOne(re => re.Owner)
+                .HasForeignKey(re => re.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RentingEvent>()
+                .HasOne(re => re.Car)
+                .WithMany(c => c.RentingEvents)
+                .HasForeignKey(re => re.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

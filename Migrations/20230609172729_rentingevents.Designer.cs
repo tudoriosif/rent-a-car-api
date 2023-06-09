@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACarAPI.Contexts;
 
@@ -10,9 +11,11 @@ using RentACarAPI.Contexts;
 namespace RentACarAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230609172729_rentingevents")]
+    partial class rentingevents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -317,24 +320,18 @@ namespace RentACarAPI.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<double>("Cost")
+                        .HasColumnType("double");
+
                     b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<double>("PricePerHour")
-                        .HasColumnType("double");
-
-                    b.Property<DateTime?>("RentalEndDate")
+                    b.Property<DateTime>("RentalEndDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("RentalStartDate")
+                    b.Property<DateTime>("RentalStartDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<double?>("TotalCost")
-                        .HasColumnType("double");
-
-                    b.Property<double?>("TotalRentingHours")
-                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -342,7 +339,7 @@ namespace RentACarAPI.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("RentingEvents");
+                    b.ToTable("RentingEvent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

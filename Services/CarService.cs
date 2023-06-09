@@ -137,6 +137,7 @@ namespace RentACarAPI.Services
                     .Include(car => car.Position)
                     .Include(car => car.CarType)
                     .Include(car => car.Owner)
+                    .Include(car => car.RentingEvents)
                     .Single(c => c.Id == id);
             }catch (Exception ex)
             {

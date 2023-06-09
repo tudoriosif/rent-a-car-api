@@ -22,6 +22,18 @@ namespace RentACarAPI.Models
         [Required]
         public int Year { get; set; }
 
+        [Required]
+        public bool isAvailable
+        {
+            get { return RentalStartDate == null || RentalEndDate < DateTime.Now; }
+        }
+
+        public DateTime? RentalStartDate { get; set; }
+
+        public DateTime? RentalEndDate { get; set; }
+
+        public ICollection<RentingEvent> RentingEvents { get; set; }
+
         public int PositionId { get; set; }
         public Position? Position { get; set; }
 
