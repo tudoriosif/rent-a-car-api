@@ -306,8 +306,6 @@ namespace RentACarAPI.Services
                 };
             }
 
-
-
             if (!car.RentingEvents.Any())
             {
                 return new CarResponse
