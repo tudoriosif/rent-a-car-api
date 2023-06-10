@@ -135,7 +135,8 @@ namespace RentACarAPI.Services
             return new UserResponse
             {
                 Message = tokenAsString,
-                isSuccess = true
+                isSuccess = true,
+                Owner = user
             };
         }
 

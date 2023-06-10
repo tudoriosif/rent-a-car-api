@@ -258,6 +258,7 @@ namespace RentACarAPI.Services
             var currentTime = DateTime.Now;
 
             var car = await _dataContext.Cars
+                .Include(c => c.CarType)
                 .Include(c => c.RentingEvents.Where(re => re.RentalEndDate < currentTime && re.RentalStartDate != null))
                     .ThenInclude(re => re.Owner)
                 .SingleOrDefaultAsync(car => car.Id == id);
@@ -293,6 +294,7 @@ namespace RentACarAPI.Services
         {
             var currentTime = DateTime.Now;
             var car = await _dataContext.Cars
+                .Include(c => c.CarType)
                 .Include(c => c.RentingEvents.Where(re => re.RentalStartDate > currentTime && re.RentalStartDate != null))
                     .ThenInclude(re => re.Owner)
                 .SingleOrDefaultAsync(car => car.Id == id);
