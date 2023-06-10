@@ -98,5 +98,35 @@ namespace RentACarAPI.Controllers.Cars
 
             return Ok(result);
         }
+
+        [HttpGet("past-events/{id}")]
+        public async Task<IActionResult> PastEvents(int id)
+        {
+            var result = await _carService.GetPastEvents(id);
+
+            if (!result.isSuccess)
+            {
+                if(result.Car == null)
+                    return NotFound(result);
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("future-events/{id}")]
+        public async Task<IActionResult> FutureEvents(int id)
+        {
+            var result = await _carService.GetFutureEvents(id);
+
+            if (!result.isSuccess)
+            {
+                if (result.Car == null)
+                    return NotFound(result);
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

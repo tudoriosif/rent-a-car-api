@@ -74,6 +74,7 @@ namespace RentACarAPI.Services
             // Update car rental dates
             car.RentalStartDate = model.RentalStartDate;
             car.RentalEndDate = model.RentalEndDate;
+            car.OwnerId = owner.Id;
 
             // Calculate costs
             var totalRentingHours = (model.RentalEndDate - model.RentalStartDate).TotalHours;
@@ -130,6 +131,22 @@ namespace RentACarAPI.Services
                 };
             }
 
+            var rentalStartDate = DateTime.Now;
+
+            var currentlyRented = await _dataContext.Cars
+                .Where(c => c.OwnerId == owner.Id && c.RentalStartDate <= rentalStartDate && c.RentalEndDate == null)
+                .ToListAsync();
+
+            if (currentlyRented.Any())
+            {
+                return new RentingResponse
+                {
+                    Message = "You already has a rented car!",
+                    isSuccess = false,
+                    Owner = owner,
+                };
+            }
+
             var car = await _dataContext.Cars.FindAsync(carId);
 
             if (car == null)
@@ -153,11 +170,10 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var rentalStartDate = DateTime.Now;
-
             // Update car rental
             car.RentalStartDate = rentalStartDate;
             car.RentalEndDate = null;
+            car.OwnerId = owner.Id;
 
             // Create rating event
             var rentingEvent = new RentingEvent
@@ -235,6 +251,7 @@ namespace RentACarAPI.Services
             var rentalEndDate = DateTime.Now;
 
             car.RentalEndDate = rentalEndDate;
+            car.OwnerId = null;
 
             var rentingEvent = await _dataContext.RentingEvents
                 .Include(re => re.Car)
@@ -331,6 +348,7 @@ namespace RentACarAPI.Services
 
             car.RentalStartDate = null;
             car.RentalEndDate = null;
+            car.OwnerId = null;
 
             try
             {

@@ -18,6 +18,9 @@ namespace RentACarAPI.Services
 
         Task<CarResponse> UpdateCar(int id, UpdateCarRequest model);
 
+        Task<CarResponse> GetPastEvents(int id);
+
+        Task<CarResponse> GetFutureEvents(int id);
     }
 
     public class CarService : ICarService
@@ -247,6 +250,79 @@ namespace RentACarAPI.Services
                 Message = "Car updated!",
                 isSuccess = true,
                 Car = car
+            };
+        }
+
+        public async Task<CarResponse> GetPastEvents(int id)
+        {
+            var currentTime = DateTime.Now;
+
+            var car = await _dataContext.Cars
+                .Include(c => c.RentingEvents.Where(re => re.RentalEndDate < currentTime && re.RentalStartDate != null))
+                    .ThenInclude(re => re.Owner)
+                .SingleOrDefaultAsync(car => car.Id == id);
+
+            if(car == null)
+            {
+                return new CarResponse
+                {
+                    Message = "Car couldn't be found!",
+                    isSuccess = false
+                };
+            }
+
+            if (!car.RentingEvents.Any()) 
+            {
+                return new CarResponse
+                {
+                    Message = "There are no past renting events!",
+                    isSuccess = false,
+                    Car = car
+                };
+            }
+
+            return new CarResponse
+            {
+                Message = "Past renting events received successfully!",
+                isSuccess = true,
+                RentingEvents = car.RentingEvents
+            };
+        }
+
+        public async Task<CarResponse> GetFutureEvents(int id)
+        {
+            var currentTime = DateTime.Now;
+            var car = await _dataContext.Cars
+                .Include(c => c.RentingEvents.Where(re => re.RentalStartDate > currentTime && re.RentalStartDate != null))
+                    .ThenInclude(re => re.Owner)
+                .SingleOrDefaultAsync(car => car.Id == id);
+
+            if (car == null)
+            {
+                return new CarResponse
+                {
+                    Message = "Car couldn't be found!",
+                    isSuccess = false
+                };
+            }
+
+
+
+            if (!car.RentingEvents.Any())
+            {
+                return new CarResponse
+                {
+                    Message = "There are no future renting events!",
+                    isSuccess = false,
+                    Car = car
+                };
+            }
+
+            return new CarResponse
+            {
+                Message = "Future renting events received successfully!",
+                isSuccess = true,
+                RentingEvents = car.RentingEvents
             };
         }
     }

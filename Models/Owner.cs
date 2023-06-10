@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace RentACarAPI.Models
 {
@@ -6,6 +7,7 @@ namespace RentACarAPI.Models
     {
         public ICollection<Car> Cars { get; set; }
 
+        [JsonIgnore]
         public ICollection<RentingEvent> RentingEvents { get; set;}
     }
 }

@@ -58,9 +58,6 @@ builder.Services.AddDbContext<DataContext>();
 builder.Services.AddIdentityCore<Owner>(options =>
 {
     options.User.RequireUniqueEmail = true;
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequiredLength = 5;
 })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
@@ -90,6 +87,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IRentingService, RentingService>();
+
+builder.Services.AddHostedService<RentingEventsBackgroundService>();
 
 var app = builder.Build();
 

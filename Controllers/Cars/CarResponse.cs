@@ -12,6 +12,8 @@ namespace RentACarAPI.Controllers.Cars
 
         public Car? Car { get; set; }
 
+        public IEnumerable<RentingEvent>? RentingEvents { get; set; }
+
         public IEnumerable<string>? Errors { get; set; }
     }
 }
