@@ -167,6 +167,7 @@ namespace RentACarAPI.Services
 
             var rentingEvent = await _dataContext.RentingEvents
                 .Include(re => re.Car)
+                    .ThenInclude(car => car.CarType)
                 .Where(re => re.CarId == carId && re.OwnerId == owner.Id)
                 .Where(re => re.Car.OwnerId == owner.Id)
                 .Where(re => re.RentalStartDate > currentDateTime && re.RentalEndDate != null)
@@ -207,6 +208,7 @@ namespace RentACarAPI.Services
 
             var rentingEvents = await _dataContext.RentingEvents
                 .Include(re => re.Car)
+                    .ThenInclude(car => car.CarType)
                 .Where(re => re.OwnerId == owner.Id)
                 .Where(re => re.RentalStartDate > currentDateTime && re.RentalEndDate != null)
                 .OrderBy(re => re.RentalStartDate)
@@ -246,6 +248,7 @@ namespace RentACarAPI.Services
 
             var rentingEvent = await _dataContext.RentingEvents
                 .Include(re => re.Car)
+                    .ThenInclude(car => car.CarType)
                 .Include(re => re.Owner)
                 .Where(re => re.OwnerId == owner.Id)
                 .Where(re => re.Car.OwnerId == owner.Id && re.RentalStartDate <= currentTime && re.RentalEndDate == null)
@@ -285,6 +288,7 @@ namespace RentACarAPI.Services
 
             var rentingEvents = await _dataContext.RentingEvents
                 .Include(re => re.Car)
+                    .ThenInclude(car => car.CarType)
                 .Where(re => re.OwnerId == owner.Id)
                 .Where(re => re.RentalStartDate != null && re.RentalEndDate != null && re.RentalEndDate < currentDateTime)
                 .OrderByDescending(re => re.RentalEndDate)

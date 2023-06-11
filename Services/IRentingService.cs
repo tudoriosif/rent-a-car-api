@@ -145,7 +145,7 @@ namespace RentACarAPI.Services
             {
                 return new RentingResponse
                 {
-                    Message = "You already has a rented car!",
+                    Message = "You already have a rented car!",
                     isSuccess = false,
                     Owner = owner,
                 };

@@ -46,10 +46,12 @@ namespace RentACarAPI.Services
                 };
             }
 
+            var (latitude, longitude) = RentingEventsBackgroundService.GenerateRandomCoordinates();
+
             var postion = new Position
             {
-                Latitude = 0.0,
-                Longitude = 0.0,
+                Latitude = latitude,
+                Longitude = longitude,
             };
 
             _dataContext.Positions.Add(postion);
