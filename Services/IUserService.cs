@@ -218,7 +218,7 @@ namespace RentACarAPI.Services
             {
                 return new UserResponse
                 {
-                    Message = "No planned events for this car!",
+                    Message = "No planned events!",
                     isSuccess = false,
                     Owner = owner
                 };
