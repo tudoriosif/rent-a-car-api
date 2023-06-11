@@ -25,6 +25,7 @@ namespace RentACarAPI.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            options.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

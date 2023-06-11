@@ -74,7 +74,7 @@ namespace RentACarAPI.Services
 
                             (position.Latitude, position.Longitude) = GenerateRandomCoordinates();
 
-                            _logger.LogCritical("New positions: " + JsonConvert.SerializeObject(position, Formatting.Indented) + "\n From Renting event: " + JsonConvert.SerializeObject(rentingEvent, Formatting.Indented));
+                            _logger.LogCritical("Car position changed!");
 
                             await _dataContext.SaveChangesAsync();
                         }

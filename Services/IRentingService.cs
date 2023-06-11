@@ -48,7 +48,10 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var car = await _dataContext.Cars.FindAsync(model.CarId);
+            var car = await _dataContext.Cars
+                .Include(car => car.Position)
+                .Include(car => car.CarType)
+                .SingleOrDefaultAsync(car => car.Id == model.CarId);
 
             if(car == null)
             {
@@ -115,7 +118,8 @@ namespace RentACarAPI.Services
             {
                 Message = "Renting planned successfully",
                 isSuccess = true,
-                RentingEvent = rentingEvent
+                RentingEvent = rentingEvent,
+                Car = car,
             };
         }
 
@@ -147,7 +151,10 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var car = await _dataContext.Cars.FindAsync(carId);
+            var car = await _dataContext.Cars
+                .Include(c => c.Position)
+                .Include(c => c.CarType)
+                .SingleOrDefaultAsync(car => car.Id == carId);
 
             if (car == null)
             {
@@ -209,7 +216,8 @@ namespace RentACarAPI.Services
             {
                 Message = "Renting started successfully",
                 isSuccess = true,
-                RentingEvent = rentingEvent
+                RentingEvent = rentingEvent,
+                Car = car
             };
         }
 
@@ -225,7 +233,10 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var car = await _dataContext.Cars.FindAsync(carId);
+            var car = await _dataContext.Cars
+                .Include(car => car.Position)
+                .Include(car => car.CarType)
+                .SingleOrDefaultAsync(car => car.Id == carId);
 
             if (car == null)
             {
@@ -297,7 +308,8 @@ namespace RentACarAPI.Services
             {
                 Message = "Renting finished successuflly",
                 isSuccess = true,
-                RentingEvent = rentingEvent
+                RentingEvent = rentingEvent,
+                Car = car
             };
         }
 
@@ -313,7 +325,10 @@ namespace RentACarAPI.Services
                 };
             }
 
-            var car = await _dataContext.Cars.FindAsync(carId);
+            var car = await _dataContext.Cars
+                .Include(car => car.Position)
+                .Include(car => car.CarType)
+                .SingleOrDefaultAsync(car => car.Id == carId);
 
             if (car == null)
             {
@@ -371,7 +386,8 @@ namespace RentACarAPI.Services
             {
                 Message = "Planned rent cancelled successfully",
                 isSuccess = true,
-                RentingEvent = rentingEvent
+                RentingEvent = rentingEvent,
+                Car = car
             };
         }
     }
